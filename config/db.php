@@ -2,7 +2,7 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'sqlite:C:/Users/Kamil/Desktop/Studia/ecommerce/Projekt/basic/database/126865.db',
+    'dsn' => 'sqlite:C:/Users/greva/Documents/GitHub/E-commerceProject/database/126865.db',
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
