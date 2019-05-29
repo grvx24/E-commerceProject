@@ -1,29 +1,38 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\LinkPager;
+use yii\grid\GridView;
+use yii\widgets\Pjax;
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\ProductSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Products';
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<h1>Products</h1>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Category</th>
-        <th scope="col">Count</th>
-        <th scope="col">Description</th>
-    </tr>
-    </thead>
-  <tbody>
-  <?php foreach ($products as $product): ?>
-      <tr>
-          <td><?= Html::encode("{$product->Name}") ?></td>
-          <td><?= Html::encode("({$product->Category})") ?></td>
-          <td><?= Html::encode("{$product->Count}") ?></td>
-          <td><?= Html::encode("{$product->Description}") ?></td>
-      </tr>
-  <?php endforeach; ?>
-  </tbody>
+<div class="product-index">
 
-</table>
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php Pjax::begin(); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-<?= LinkPager::widget(['pagination' => $pagination]) ?>
+    <p>
+        <?= Html::a('Create Product', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'Name:ntext',
+            'Category:ntext',
+            'Count',
+            'Description:ntext',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+    <?php Pjax::end(); ?>
+</div>

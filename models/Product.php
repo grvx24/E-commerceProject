@@ -1,16 +1,48 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Kamil
- * Date: 4/17/2019
- * Time: 10:40 PM
- */
 
 namespace app\models;
 
-use yii\db\ActiveRecord;
+use Yii;
 
-class Product extends ActiveRecord
+/**
+ * This is the model class for table "Product".
+ *
+ * @property string $Name
+ * @property string $Category
+ * @property int $Count
+ * @property string $Description
+ */
+class Product extends \yii\db\ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
+    public static function tableName()
+    {
+        return 'Product';
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['Name', 'Category', 'Description'], 'string'],
+            [['Count'], 'integer'],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'Name' => 'Name',
+            'Category' => 'Category',
+            'Count' => 'Count',
+            'Description' => 'Description',
+        ];
+    }
 }
