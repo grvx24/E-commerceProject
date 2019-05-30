@@ -18,15 +18,19 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
+    <?= $form->field($model, 'ID') ?>
+
     <?= $form->field($model, 'Name') ?>
 
-    <?= $form->field($model, 'Category') ?>
+    <?= $form->field($model, 'CategoryName') ?>
+
+    <?= $form->field($model, 'Price') ?>
 
     <?= $form->field($model, 'Count') ?>
 
-    <?= $form->field($model, 'Description') ?>
+    <?php // echo $form->field($model, 'Description') ?>
 
-    <?= $form->field($model, 'Image') ?>
+    <?php // echo $form->field($model, 'Image') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

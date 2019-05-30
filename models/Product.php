@@ -7,10 +7,15 @@ use Yii;
 /**
  * This is the model class for table "Product".
  *
+ * @property int $ID
  * @property string $Name
- * @property string $Category
+ * @property string $CategoryName
+ * @property int $Price
  * @property int $Count
  * @property string $Description
+ * @property resource $Image
+ *
+ * @property Category $categoryName
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -28,8 +33,9 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Name', 'Category', 'Description'], 'string'],
-            [['Count'], 'integer'],
+            [['Name', 'CategoryName', 'Description', 'Image'], 'string'],
+            [['Price', 'Count'], 'integer'],
+            [['CategoryName'], 'exist', 'skipOnError' => true, 'targetClass' => Category::className(), 'targetAttribute' => ['CategoryName' => 'ID']],
         ];
     }
 
@@ -39,10 +45,21 @@ class Product extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'ID' => 'ID',
             'Name' => 'Name',
-            'Category' => 'Category',
+            'CategoryName' => 'Category Name',
+            'Price' => 'Price',
             'Count' => 'Count',
             'Description' => 'Description',
+            'Image' => 'Image',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCategoryName()
+    {
+        return $this->hasOne(Category::className(), ['ID' => 'CategoryName']);
     }
 }

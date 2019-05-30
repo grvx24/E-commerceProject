@@ -14,11 +14,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'Name')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'Category')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'CategoryName')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'Price')->textInput() ?>
 
     <?= $form->field($model, 'Count')->textInput() ?>
 
     <?= $form->field($model, 'Description')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'Image')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
