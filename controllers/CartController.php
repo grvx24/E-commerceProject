@@ -4,6 +4,8 @@
 namespace app\controllers;
 
 
+use app\models\Order;
+use app\models\OrderItem;
 use app\models\Payment;
 use app\models\Product;
 use OpenPayU_Configuration;
@@ -128,6 +130,9 @@ class CartController extends Controller
             $order['currencyCode'] = 'PLN';
             $order['extOrderId'] = uniqid('', true);
 
+            $orderDB = new Order();
+            $orderDB->TransactionID = $order['extOrderId'];
+
             $cartItems = $this->cart->getItems();
             $i=0;
             $totalAmount=0;
@@ -139,7 +144,6 @@ class CartController extends Controller
                 $order['products'][$i]['quantity'] = $quantity;
                 $i++;
                 $totalAmount +=$price*$quantity;
-
             }
             $order['totalAmount'] = $totalAmount;
             $order['buyer']['email'] = $model->email;
@@ -148,15 +152,25 @@ class CartController extends Controller
             $order['buyer']['lastName'] = $model->lastname;
             $order['buyer']['language'] = 'en';
 
-            $response = OpenPayU_Order::create($order);
 
+            $orderDB->FirstName = $model->firstname;
+            $orderDB->LastName = $model->lastname;
+            $orderDB->Email = $model->email;
+            $orderDB->Address = $model->address;
+            $orderDB->City = $model->city;
+            $orderDB->Price = $totalAmount;
+            $orderDB->Date = date("Y-m-d H:i:s");
+
+            $orderDB->save();
+
+            $response = OpenPayU_Order::create($order);
 
             $this->redirect($response->getResponse()->redirectUri);
             header('Location:'.$response->getResponse()->redirectUri);
             //You must redirect your client to PayU payment summary page.
         }catch (\Exception $e)
         {
-
+            echo $e->getMessage();
         }
     }
 
