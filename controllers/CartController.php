@@ -120,8 +120,8 @@ class CartController extends Controller
         try
         {
             $order = [];
-            $order['notifyUrl'] = 'http://localhost:8080'.Url::toRoute('cart/finishpayment');
-            $order['continueUrl'] = 'http://localhost:8080';
+            $order['notifyUrl'] = 'http://localhost:8080/index.php?r=cart%2Ffinishpayment';
+            $order['continueUrl'] = 'http://localhost:8080/index.php?r=cart%2Ffinishpayment';
             $order['customerIp'] = '127.0.0.1';
             $order['merchantPosId'] = OpenPayU_Configuration::getOauthClientId() ? OpenPayU_Configuration::getOauthClientId() : OpenPayU_Configuration::getMerchantPosId();
             $order['description'] = 'New order';
@@ -141,7 +141,6 @@ class CartController extends Controller
                 $totalAmount +=$price*$quantity;
 
             }
-
             $order['totalAmount'] = $totalAmount;
             $order['buyer']['email'] = $model->email;
             $order['buyer']['phone'] = $model->phone;
@@ -159,13 +158,20 @@ class CartController extends Controller
         {
 
         }
-
-
     }
 
     public function actionFinishpayment()
     {
-        return $this->render('finishpayment');
+        $merchantID = headers_list();
+
+        if(isset($_GET['MerchantID']))
+        {
+            $merchantID=$_GET['MerchantID'];
+        }
+
+        $this->cart->clear();
+        return $this->render('finishpayment',
+            ['merchantID' =>$merchantID]);
     }
 
     public function actionPaymentinfo()

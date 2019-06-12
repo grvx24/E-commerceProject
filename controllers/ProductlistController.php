@@ -53,11 +53,15 @@ class ProductlistController extends Controller
                 'model' => $addToCartModel,
             ]);
         }
-
-
-
-
     }
 
+    public function actionProductview($id)
+    {
+        $product =  Product::findOne($id);
+
+        return $this->render('productview', [
+            'product' => $product,
+        ]);
+    }
 
 }

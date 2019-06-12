@@ -20,7 +20,7 @@ use yii\widgets\LinkPager;
 
     <?php foreach ($products as $product): ?>
         <tr>
-            <th scope="row"><?= $product->Name?></th>
+            <th scope="row"><?= $product->Name?><a href="<?= Url::toRoute(['productlist/productview','id'=>$product->ID]) ?>">asd</a></th>
             <td><?= $product->Price?></td>
             <td><?php if($product->Count>0) echo 'Towar dostępny'; else echo 'Towar niedostępny'?></td>
             <td><?= $product->Description?></td>
@@ -40,7 +40,6 @@ use yii\widgets\LinkPager;
                 <?= Html::submitButton('Dodaj do koszyka', ['class' => 'btn btn-primary']) ?>
             </td>
             <?php ActiveForm::end() ?>
-            <td><a href="<?=Url::toRoute(['cart/add', 'id' => $product->ID])?>" class="btn btn-primary" >Dodaj do koszyka</a></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
