@@ -20,7 +20,7 @@ use yii\widgets\LinkPager;
 
     <?php foreach ($products as $product): ?>
         <tr>
-            <th scope="row"><?= $product->Name?><a href="<?= Url::toRoute(['productlist/productview','id'=>$product->ID]) ?>">asd</a></th>
+            <th scope="row"><a href="<?= Url::toRoute(['productlist/productview','id'=>$product->ID]) ?>"><?= $product->Name?></a></th>
             <td><?= $product->Price?></td>
             <td><?php if($product->Count>0) echo 'Towar dostępny'; else echo 'Towar niedostępny'?></td>
             <td><?= $product->Description?></td>

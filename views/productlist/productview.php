@@ -24,6 +24,16 @@ use yii\widgets\DetailView;
         <li class="list-group-item"><?= Html::img(Url::to('@web/images/products/'.$product->Image),['alt'=>'Logo', 'width'=>'300','height'=>'240']) ?></li>
     </ul>
 
-    <?=Html::a('Dodaj do koszyka',[Url::toRoute(['cart/add','id'=>$product->ID,''])]) ?>
+    <?php $model->id = $product->ID ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'addToCart',
+        'options' => ['class' => 'form-inline'],
+    ]) ?>
+    <div class="form-group">
+        <?= Html::activeHiddenInput($model,'id',['class'=>'form-control']) ?>
+        <?= Html::activeInput('number',$model,'quantity',['value'=>'1','min'=>'1','max'=>'20','class'=>'form-control']) ?>
+    </div>
+    <?= Html::submitButton('Dodaj do koszyka', ['class' => 'btn btn-primary']) ?>
+    <?php ActiveForm::end() ?>
 
 </div>

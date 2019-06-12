@@ -57,11 +57,18 @@ class ProductlistController extends Controller
 
     public function actionProductview($id)
     {
+        $model = new ProductToCart();
         $product =  Product::findOne($id);
-
-        return $this->render('productview', [
-            'product' => $product,
-        ]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            $productId = $_POST['ProductToCart']['id'];
+            $quantity = $_POST['ProductToCart']['quantity'];
+            return $this->redirect(['cart/add', 'id' => $productId, 'qty' => $quantity]);
+        }else{
+            return $this->render('productview', [
+                'product' => $product,
+                'model' => $model,
+            ]);
+        }
     }
 
 }
