@@ -7,7 +7,8 @@ use Yii;
 /**
  * This is the model class for table "Category".
  *
- * @property int $CategoryName
+ * @property int $ID
+ * @property string $CategoryName
  *
  * @property Product[] $products
  */
@@ -26,7 +27,11 @@ class Category extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [];
+        return [
+            [['CategoryName'], 'required'],
+            [['CategoryName'], 'string'],
+            [['CategoryName'], 'unique'],
+        ];
     }
 
     /**
@@ -35,6 +40,7 @@ class Category extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'ID' => 'ID',
             'CategoryName' => 'Category Name',
         ];
     }

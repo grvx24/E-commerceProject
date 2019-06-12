@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Application requirement checker script.
@@ -9,7 +10,6 @@
  * If you are using Linux you can create a hard link instead, using the following command:
  * ln ../requirements.php requirements.php
  */
-
 // you may need to adjust this path to the correct Yii framework path
 // uncomment and adjust the following line if Yii is not located at the default path
 //$frameworkPath = dirname(__FILE__) . '/vendor/yiisoft/yii2';
@@ -157,4 +157,6 @@ if (!version_compare(phpversion(), '5.5', '>=')) {
     );
 }
 
-$requirementsChecker->checkYii()->check($requirements)->render();
+$result = $requirementsChecker->checkYii()->check($requirements)->getResult();
+$requirementsChecker->render();
+exit($result['summary']['errors'] === 0 ? 0 : 1);

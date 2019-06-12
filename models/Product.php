@@ -2,7 +2,12 @@
 
 namespace app\models;
 
+use devanych\cart\Cart;
+use Psr\Cache\CacheException;
+use Psr\Cache\InvalidArgumentException;
+use Symfony\Contracts\Cache\ItemInterface;
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "Product".
@@ -17,7 +22,7 @@ use Yii;
  *
  * @property Category $categoryName
  */
-class Product extends \yii\db\ActiveRecord
+class Product extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -62,4 +67,27 @@ class Product extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Category::className(), ['ID' => 'CategoryName']);
     }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Adds a tag to a cache item.
+     *
+     * Tags are strings that follow the same validation rules as keys.
+     *
+     * @param string|string[] $tags A tag or array of tags
+     *
+     * @return $this
+     *
+     * @throws InvalidArgumentException When $tag is not valid
+     * @throws CacheException           When the item comes from a pool that is not tag-aware
+     */
 }

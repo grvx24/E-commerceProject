@@ -12,9 +12,21 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+		'cart' => [
+            'class' => 'devanych\cart\Cart',
+            'storageClass' => 'devanych\cart\storage\SessionStorage',
+            'calculatorClass' => 'devanych\cart\calculators\SimpleCalculator',
+            'params' => [
+                'key' => 'cart',
+                'expire' => 604800,
+                'productClass' => 'app\models\Product',
+                'productFieldId' => 'ID',
+                'productFieldPrice' => 'Price',
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'zndcybPeuS24hNo8TN8h5U38HjQptnJe',
+            'cookieValidationKey' => '1234',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -68,9 +80,18 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'*' only for dev!
-        'allowedIPs' => ['127.0.0.1', '::1','*'],
+        //'allowedIPs' => ['127.0.0.1', '::1'],
     ];
+    //set Sandbox Environment
+    OpenPayU_Configuration::setEnvironment('sandbox');
+
+    //set POS ID and Second MD5 Key (from merchant admin panel)
+    OpenPayU_Configuration::setMerchantPosId('358301');
+    OpenPayU_Configuration::setSignatureKey('bb74cf0be73e3fbd4a68ddf1542b31bb');
+
+    //set Oauth Client Id and Oauth Client Secret (from merchant admin panel)
+    OpenPayU_Configuration::setOauthClientId('358301');
+    OpenPayU_Configuration::setOauthClientSecret('c154ee5c798227d3aa502e7e7ef5950f');
 }
 
 return $config;

@@ -126,8 +126,11 @@ class SiteController extends Controller
         return $this->render('about');
     }
 
+    //new code - nowy kod
     public function actionSay($message = 'Hello')
     {
-        return $this->render('say', ['message' => $message]);
+        return $this->render
+        ('say', ['message' => $message]);
     }
+
 }
