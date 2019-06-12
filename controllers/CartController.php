@@ -162,7 +162,7 @@ class CartController extends Controller
             $orderDB->Date = date("Y-m-d H:i:s");
 
             $orderDB->save();
-
+            $_SESSION['orderid']=$order['extOrderId'];
             $response = OpenPayU_Order::create($order);
 
             $this->redirect($response->getResponse()->redirectUri);
@@ -176,16 +176,15 @@ class CartController extends Controller
 
     public function actionFinishpayment()
     {
-        $merchantID = headers_list();
-
-        if(isset($_GET['MerchantID']))
+        $orderID = '';
+        if(isset($_SESSION['orderid']))
         {
-            $merchantID=$_GET['MerchantID'];
+            $orderID=$_SESSION['orderid'];
         }
 
         $this->cart->clear();
         return $this->render('finishpayment',
-            ['merchantID' =>$merchantID]);
+            ['orderID' =>$orderID]);
     }
 
     public function actionPaymentinfo()
